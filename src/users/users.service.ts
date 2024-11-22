@@ -33,9 +33,11 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<Omit<User, 'password'>[]> {
     try {
-      const users = await this.userRepository.find();
+      const users = await this.userRepository.find({
+        select: ['id', 'username', 'email', 'country', 'state', 'city']
+      });
       return users;
     } catch (error) {
       console.error('Error fetching errors:', error);
@@ -43,7 +45,7 @@ export class UsersService {
     }
   }
 
-  async findOne(id: number): Promise<User> {
+  async findOne(id: number): Promise<Partial<User>> {
     try {
       const user = await this.userRepository.findOne({ where: { id } });
 
@@ -51,7 +53,8 @@ export class UsersService {
         throw new NotFoundException(`User with ID ${id} not found`);
       }
 
-      return user;
+      const {password, ...userWithoutPassword} = user;
+      return userWithoutPassword;
     } catch (error) {
       console.error(error);
       throw new InternalServerErrorException('Failed to fetch user');
