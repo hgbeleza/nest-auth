@@ -28,7 +28,6 @@ export class UsersService {
 
       return await this.userRepository.save(createUserDto);
     } catch (error) {
-      console.error('Error creating user:', error);
       throw new Error('Failed to create user');
     }
   }
@@ -40,7 +39,6 @@ export class UsersService {
       });
       return users;
     } catch (error) {
-      console.error('Error fetching errors:', error);
       throw new Error('Failed to fetch users');
     }
   }
@@ -56,7 +54,6 @@ export class UsersService {
       const {password, ...userWithoutPassword} = user;
       return userWithoutPassword;
     } catch (error) {
-      console.error(error);
       throw new InternalServerErrorException('Failed to fetch user');
     }
   }
@@ -72,7 +69,6 @@ export class UsersService {
 
       return await this.userRepository.save(user);
     } catch (error) {
-      console.error('Error updating user:', error);
       throw new Error('Failed to update user');
     }
   }
@@ -86,7 +82,6 @@ export class UsersService {
 
       await this.userRepository.remove(user);
     } catch (error) {
-      console.error('Error removing user:', error);
       throw new Error('Failed to remove user');
     }
   }
