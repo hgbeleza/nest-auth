@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { join } from 'path';
         entities: [join(process.cwd(), 'dist/**/*.entity.js')],
         synchronize: true
       })
-    })
+    }),
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],
